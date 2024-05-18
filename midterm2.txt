@@ -1,0 +1,79 @@
+import java.util.Scanner;
+
+public class KSG20211354_mid2 {
+    public static void main(String[] args) {
+        Scanner s = new Scanner(System.in);
+
+        String[] hands = {"가위", "바위", "보"};
+        int userWinCount = 0;
+        int computerWinCount = 0;
+
+        while (true) {
+            String userHand, computerHand;
+            
+            System.out.print("가위 바위 보!!");
+            System.out.print("왼손의 가위/바위/보 ==> ");
+            String leftHand = s.next();
+
+            System.out.print("오른손의 가위/바위/보 ==> ");
+            String rightHand = s.next();
+
+            if ((!leftHand.equals("가위") && !leftHand.equals("바위") && !leftHand.equals("보")) ||
+                (!rightHand.equals("가위") && !rightHand.equals("바위") && !rightHand.equals("보"))) {
+                System.out.println("잘못된 입력입니다. 가위, 바위, 보 중에서 선택해주세요.");
+                continue;
+            }
+
+            int rnd1 = (int) (Math.random() * hands.length);
+            int rnd2 = (int) (Math.random() * hands.length);
+            String comHand1 = hands[rnd1];
+            String comHand2 = hands[rnd2];
+
+            System.out.println("컴퓨터의 왼손 가위/바위/보 ==> " + comHand1);
+            System.out.println("컴퓨터의 오른손 가위/바위/보 ==> " + comHand2);
+
+            System.out.print("왼손(" + leftHand + ")과 오른손(" + rightHand + ") 중 하나를 선택하세요 ==> ");
+            String input = s.next();
+
+            if (input.equals(leftHand) || input.equals(rightHand)) {
+                userHand = input;
+            } else {
+                System.out.println("잘못된 선택입니다. " + leftHand + " 또는 " + rightHand + "를 선택해주세요.");
+                continue;
+            }
+
+            int finalChoice = (int) (Math.random() * 2);
+            computerHand = (finalChoice == 0) ? comHand1 : comHand2;
+
+            System.out.println("컴퓨터의 최종 선택 ==> " + computerHand);
+
+            if (userHand.equals(computerHand)) {
+                System.out.println("비겼습니다. 다시 선택하세요.");
+                continue;
+            } else if ((userHand.equals("가위") && computerHand.equals("보")) ||
+                       (userHand.equals("바위") && computerHand.equals("가위")) ||
+                       (userHand.equals("보") && computerHand.equals("바위"))) {
+                System.out.println("와 이겼다!!");
+                userWinCount++;
+                System.out.println("사용자가 이긴 횟수: " + userWinCount);
+                System.out.println("컴퓨터가 이긴 횟수: " + computerWinCount);
+            } else {
+                System.out.println("안돼 졌어 ㅠㅠ");
+                computerWinCount++;
+                System.out.println("사용자가 이긴 횟수: " + userWinCount);
+                System.out.println("컴퓨터가 이긴 횟수: " + computerWinCount);
+            }
+
+            if (userWinCount == 2 || computerWinCount == 2) {
+                break;
+            }
+        }
+
+        // 최종 결과 출력
+        System.out.println("게임 종료!");
+        System.out.println("사용자가 이긴 횟수: " + userWinCount);
+        System.out.println("컴퓨터가 이긴 횟수: " + computerWinCount);
+
+        s.close();
+    }
+}
